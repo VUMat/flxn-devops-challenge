@@ -35,17 +35,21 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_CREDS }}'
 
-      - name: Set up gcloud CLI
-        uses: google-github-actions/setup-gcloud@v1
+      - id: 'get-credentials'
+        uses: 'google-github-actions/get-gke-credentials@v1'
         with:
-          project_id: ${{ secrets.GKE_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_CREDS }}
+          cluster_name: 'my-cluster'
+          location: 'us-central1-a'
 
-    - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
-      with:
-        cluster_name: ${{ secrets.CLUSTER_NAME }}
-        location: ${{ secrets.GKE_CLUSTER_REGION }}
-        credentials: ${{ secrets.GCP_CREDS }}
+      # The KUBECONFIG env var is automatically exported and picked up by kubectl.
+      - id: 'get-pods'
+        run: 'kubectl get pods'
+
+      - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+        with:
+          cluster_name: ${{ secrets.CLUSTER_NAME }}
+          location: ${{ secrets.GKE_CLUSTER_REGION }}
+          credentials: ${{ secrets.GCP_CREDS }}
 
       - name: Set kubectl context
         run: |
