@@ -38,8 +38,8 @@ jobs:
       - id: 'get-credentials'
         uses: 'google-github-actions/get-gke-credentials@v1'
         with:
-          cluster_name: 'my-cluster'
-          location: 'us-central1-a'
+          cluster_name: '${{ secrets.CLUSTER_NAME }}'
+          location: '${{ secrets.GKE_CLUSTER_REGION }}'
 
       # The KUBECONFIG env var is automatically exported and picked up by kubectl.
       - id: 'get-pods'
