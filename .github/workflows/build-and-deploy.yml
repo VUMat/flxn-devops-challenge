@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -26,11 +26,6 @@ jobs:
           context: .
           push: true
           tags: vumat/helloworld-app:latest
-
-      - name: Set up environment variables
-        run: echo "${{ secrets.GCP_CREDENTIALS }}" > /tmp/account.json
-      - name: Export credentials path
-        run: export GOOGLE_APPLICATION_CREDENTIALS="/tmp/account.json"
 
       - name: Authenticate with GCP Service Account
         uses: google-github-actions/auth@v1
