@@ -33,13 +33,13 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
-          credentials_json: '${{ env.GCP_SA_KEY }}'
+          credentials_json: '${{ secrets.GCP_CREDS }}'
 
       - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: ${{ secrets.GKE_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          service_account_key: ${{ secrets.GCP_CREDS }}
 
       - name: Configure kubectl
         uses: google-github-actions/setup-gcloud@v1
