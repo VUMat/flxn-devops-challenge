@@ -28,7 +28,7 @@ jobs:
           tags: vumat/helloworld-app:latest
 
       - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: ${{ secrets.GKE_PROJECT_ID }}
           service_account_key: ${{ secrets.GKE_SA_KEY }}
