@@ -48,6 +48,8 @@ gcloud projects add-iam-policy-binding 	phrasal-aegis-381319  \
 
 Optionally we can grant access to private registry to this account.
 
+Create a gcp service account for deploying from github actions with role KubernetesAdmin
+
 
 Create a regional cluster with a multi-zone node pool
 
@@ -66,3 +68,11 @@ gcloud container clusters create mygkecluster \
 
 
 Optionally we can add --enable-stackdriver-kubernetes for monitoring purpose if we are using stackdriver
+
+
+following secrets needs to be set up in github actions: 
+CLUSTER_NAME
+DOCKER_PASSWORD
+DOCKER_USERNAME
+GKE_CLUSTER_REGION
+GKE_PROJECT_ID
