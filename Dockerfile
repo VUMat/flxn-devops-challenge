@@ -1,4 +1,4 @@
-# Use the official Python image as the base image
+# Use the official lightweight Python image as the base image
 FROM python:3.9-alpine
 
 # Create a new user and group called "appuser"

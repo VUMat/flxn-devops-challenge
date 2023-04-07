@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helloworld-app.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "helloworld-app.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "helloworld-app.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      {{- range .Values.zoneLabels }}
+                      - {{ . }}
+                      {{- end }}
+      containers:
+        - name: {{ include "helloworld-app.name" . }}
+          image: "{{ .Values.image }}"
+          ports:
+            - containerPort: {{ .Values.port }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
