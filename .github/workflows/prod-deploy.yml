@@ -16,7 +16,6 @@ jobs:
     - run: |
         echo The PR was merged
 
-jobs:
   prod-deploy:
     name: Prod Deploy
     runs-on: ubuntu-latest
