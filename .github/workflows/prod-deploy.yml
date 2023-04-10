@@ -6,6 +6,8 @@ on:
       - prod
   pull_request:
     types: [closed]
+    branches:
+      - prod
 
 jobs:
 

@@ -10,6 +10,7 @@ This repo has app.py Python Flask web application that creates a connection to a
  - Dockerfile to containerize the helloworld-app;
  - helm folder - helm template to deploy app to Kubernetes using helm;
  - .github/workflows/build-and-deploy.yml GitHub Actions pipeline
+ - .github/workflows/prod-deploy.yml GitHub Actions pipeline to deploy to prod
 
   </details>
 
@@ -122,15 +123,12 @@ GCP_CREDS           #json of service account
 
 ## Things to improve:
 
-- scan steps to pipeline 
-        - docker lint steps
-        - test coverage
+1. add terraform code (IaC) to depoy and manage GCP resources 
+2. update gcp github actions service account to use Workload Identity Federation / Keyless access instead of service account to improve security
+3. add capability to deploy ephemeral GKE cluster for CI/CD and test/dev environmentss  (cluster that will be deleted after all tests) to reduce cloud costs
+4. fine-tune firewall in GKE to limit access for github actions to improve security 
 
-- env promotion process 
-- update helm templates to make sure you are using load balancer with existing IP (which should have dns name attach to it)
-
-- create terraform (IaC) to deploy GCP infra
-- capability to deploy ephemeral GKE cluster for CI/CD and test/dev environmentss  (cluster that will be deleted after all tests)
-- add code to setup GKE (gcloud cli) 
-- fine-tune firewall in GKE to limit access for github actions 
-- update gcp github actions service account to use Workload Identity Federation / Keyless access instead of service account
+5. update helm templates to make sure you are using load balancer with existing IP (which should have dns name attach to it)
+6. add more scan steps to pipeline 
+   - docker lint steps
+   - test coverage
