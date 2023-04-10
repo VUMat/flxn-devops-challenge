@@ -1,0 +1,9 @@
+name: helloworld-app
+namespace: prod
+replicas: 5
+image: vumat/helloworld-app:latest
+port: 5000
+zoneLabels:
+  - us-west1-a
+  - us-west1-b
+  - us-west1-c

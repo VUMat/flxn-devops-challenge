@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - main
-    types: [opened, reopened]
+    types: [opened, reopened, edited]
 
 jobs:
   build-and-deploy:
@@ -67,3 +67,15 @@ jobs:
       - name: Deploy to GKE using Helm
         run: |
           helm upgrade --install helloworld-app ./helm/ 
+
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: prod
+          base: main
+          #labels: |
+          #  automated pr
+
+          #team-reviewers: |
+          #  release-approvers
