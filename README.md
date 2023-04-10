@@ -128,7 +128,7 @@ GCP_CREDS           #json of service account
 3. add capability to deploy ephemeral GKE cluster for CI/CD and test/dev environmentss  (cluster that will be deleted after all tests) to reduce cloud costs
 4. fine-tune firewall in GKE to limit access for github actions to improve security 
 
-5. workaround [known issue]( https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs). of not triggering github actions when automatic PR created 
+5. add automatic PR creationg from main to prod branch. Prod PR merge will trigger prod deploy [known issue]( https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs). of not triggering github actions when automatic PR created 
 6. make sure no downtime deploy
 7. add more scan steps to pipeline 
    - docker lint steps
