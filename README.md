@@ -26,6 +26,7 @@ Pipeline flow description
 - Authenticate to GCP and get credentials to GKE
 - Deploy helloworld-app to GKE using Helm
 - Create PR to branch "prod"
+- After merge of changes from branch main to prod prdo-deploy pipeline triggers and deploy the same docker image using helm with prod-values
 
 
 This pipeline performs static code analysis using flask8, container vulnerability scan using trivy. 
