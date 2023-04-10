@@ -69,11 +69,11 @@ jobs:
           helm upgrade --install helloworld-app ./helm/ -f ./helm/values.yaml
 
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          branch: prod
-          base: main
+      # - name: Create Pull Request
+      #   uses: peter-evans/create-pull-request@v5
+      #   with:
+      #     branch: prod
+      #     base: main
           #labels: |
           #  automated pr
 
