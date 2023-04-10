@@ -1,20 +1,11 @@
 name: Prod Deploy
 
 on:
-  pull_request:
+  push:
     branches:
       - prod
-    types:
-      - closed
-
 
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
-    - run: |
-        echo The PR was merged
 
   prod-deploy:
     name: Prod Deploy
