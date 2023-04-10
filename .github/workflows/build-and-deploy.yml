@@ -51,8 +51,6 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
-      - uses: 'actions/checkout@v3'
-
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
@@ -64,20 +62,6 @@ jobs:
         with:
           cluster_name: '${{ secrets.CLUSTER_NAME }}'
           location: '${{ secrets.GKE_CLUSTER_REGION }}'
-
-      # The KUBECONFIG env var is automatically exported and picked up by kubectl.
-      - id: 'get-pods'
-        run: 'kubectl get pods'
-
-      # - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
-      #   with:
-      #     cluster_name: ${{ secrets.CLUSTER_NAME }}
-      #     location: ${{ secrets.GKE_CLUSTER_REGION }}
-      #     credentials: ${{ secrets.GCP_CREDS }}
-
-      # - name: Set kubectl context
-      #   run: |
-      #     gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --region=${{ secrets.GKE_CLUSTER_REGION }} --project=${{ secrets.GKE_PROJECT_ID }}
 
       - name: Deploy to GKE using Helm
         run: |
