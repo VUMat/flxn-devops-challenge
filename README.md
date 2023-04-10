@@ -1,4 +1,41 @@
-## How to install/deploy app with docker locally:
+# Description:
+
+This repo has app.py Python Flask web application that creates a connection to a SQLite database and returns the total number of visits to the homepage. The application runs on port 5000 and is set to debug mode.
+
+<details>
+  <summary>Description of files in this repo:</summary>
+
+ - app.py - a simple Python "hello world" app with db;
+ - requirements.txt - list of requirements for python app and tests;
+ - Dockerfile to containerize the helloworld-app;
+ - helm folder - helm template to deploy app to Kubernetes using helm;
+ - .github/workflows/build-and-deploy.yml GitHub Actions pipeline
+
+  </details>
+
+
+Pipeline flow description
+
+- pipeline "build and deploy" triggers when PR opened for "main" branch
+- Checkout code
+- Set up python dependencies
+- Run Flake8 code quality check
+- Log in to container registry (Dockerhub)
+- Build and Push Docker image to registry 
+- Run Trivy vulnerability scanner
+- Authenticate to GCP and get credentials to GKE
+- Deploy helloworld-app to GKE using Helm
+- Create PR to branch "prod"
+
+
+This pipeline performs static code analysis using flask8, container vulnerability scan using trivy. 
+Main branch in my github repo protected and not allowing to push code without pull request. However, I can't enforce this settings on private account and it is still possible to push directly to main branch.
+
+
+
+# How to:
+
+## Install/deploy app with docker locally:
 
 Build docker image:  
 ``docker build -t helloworld-app .``
@@ -6,31 +43,9 @@ Build docker image:
 Run dockerimage locally:
 ``docker run -p 5000:5000 helloworld-app``
 
+## Deploy app to GKE using Github Actions: 
 
-# Description:
-
-This pipeline performs static code analysis using flask8, container vulnerability scan using trivy. 
-Main branch in my github repo protected and not allowing to push code without pull request. However, I can't enforce this settings on private account and it is still possible to push directly to main branch.
-
-## Things to improve:
-
-- scan steps to pipeline 
-        - docker lint steps
-        - test coverage
-
-- env promotion process 
-- update helm templates to make sure you are using load balancer with existing IP (which should have dns name attach to it)
-
-- create terraform (IaC) to deploy GCP infra
-- capability to deploy ephemeral GKE cluster for CI/CD and test/dev environmentss  (cluster that will be deleted after all tests)
-- add code to setup GKE (gcloud cli) 
-- fine-tune firewall in GKE to limit access for github actions 
-- update gcp github actions service account to use Workload Identity Federation / Keyless access instead of service account
-
-
-# How to:
-
-## Requirenments:
+### Requirenments:
  - Github repo
  - GCP account
  - Dockerhub (container registry)
@@ -99,4 +114,22 @@ GCP_CREDS           #json of service account
 
 2. Make sure your branch is protected (no push without PR) by configuring it in repo settings. Add reviewers as well.
 
-3. Push code to your repository. It should automatically create "Build and Deploy" Github Actions pipeline
+3. Push code to your repository. Made sme changes in non main branch, push it and create PR to main branch. It should automatically create "Build and Deploy" Github Actions pipeline. Pipeline works as a check for PR.  
+
+
+
+
+## Things to improve:
+
+- scan steps to pipeline 
+        - docker lint steps
+        - test coverage
+
+- env promotion process 
+- update helm templates to make sure you are using load balancer with existing IP (which should have dns name attach to it)
+
+- create terraform (IaC) to deploy GCP infra
+- capability to deploy ephemeral GKE cluster for CI/CD and test/dev environmentss  (cluster that will be deleted after all tests)
+- add code to setup GKE (gcloud cli) 
+- fine-tune firewall in GKE to limit access for github actions 
+- update gcp github actions service account to use Workload Identity Federation / Keyless access instead of service account
