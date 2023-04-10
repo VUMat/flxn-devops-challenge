@@ -1,4 +1,4 @@
-name: helloworld-app
+name: helloworld-app-prod
 namespace: prod
 replicas: 5
 image: vumat/helloworld-app:latest
