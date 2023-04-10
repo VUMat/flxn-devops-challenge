@@ -1,4 +1,4 @@
-How to install/deploy:
+How to install/deploy app with docker locally:
 
 Build docker image:  
 ``docker build -t helloworld-app .``
@@ -9,31 +9,32 @@ Run dockerimage locally:
 
 Description:
 
-
-
-
-
-add a prioritized list of five or more development tasks you would
-do next to improve your solution to the code challenge.
-
+This pipeline performs static code analysis using flask8, container vulnerability scan using trivy
 
 Things to improve:
-- GKE autopilot -> GKE if have specific requirenments /cost concern
 
 - scan steps to pipeline 
-        - static code analysis
-        - lint steps
+        - docker lint steps
         - test coverage
-        - container vulnerability scan
 
+- env promotion process 
+- update helm templates to make sure you are using load balancer with existing IP (which should have dns name attach to it)
 
 - create terraform (IaC) to deploy GCP infra
-- capability to deployephemeral GKE cluster for CI/CD and test/dev environmentss  
+- capability to deploy ephemeral GKE cluster for CI/CD and test/dev environmentss  (cluster that will be deleted after all tests)
 - add code to setup GKE (gcloud cli) 
 - fine-tune firewall in GKE to limit access for github actions 
+- update gcp github actions service account to use Workload Identity Federation / Keyless access instead of service account
 
 
-Service account for GKE with minimal privileged permissions:
+How to:
+
+Requirenments:
+ - Github repo
+ - GCP account
+
+
+Create Service account for GKE with minimal privileged permissions:
 gcloud services enable cloudresourcemanager.googleapis.com #enable api to edit  IAM policies
 
 Create a service account:
@@ -48,7 +49,12 @@ gcloud projects add-iam-policy-binding 	phrasal-aegis-381319  \
 
 Optionally we can grant access to private registry to this account.
 
-Create a gcp service account for deploying from github actions with role KubernetesAdmin
+Create a gcp service account for github actions with role KubernetesAdmin 
+
+gcloud iam service-accounts create sa-github-actions \
+    --display-name="SA for GKE minimal privileged" 
+
+
 
 
 Create a regional cluster with a multi-zone node pool
@@ -67,12 +73,15 @@ gcloud container clusters create mygkecluster \
     --service-account SA-min-gke@phrasal-aegis-381319.iam.gserviceaccount.com
 
 
-Optionally we can add --enable-stackdriver-kubernetes for monitoring purpose if we are using stackdriver
+Optionally we can add --enable-stackdriver-kubernetes for monitoring purpose (if we are using stackdriver)
 
 
-following secrets needs to be set up in github actions: 
-CLUSTER_NAME
-DOCKER_PASSWORD
-DOCKER_USERNAME
-GKE_CLUSTER_REGION
-GKE_PROJECT_ID
+Following secrets needs to be set up in github actions prior running pipeline: 
+
+CLUSTER_NAME #name of the gke cluster
+DOCKER_PASSWORD #creds to push container to registry
+DOCKER_USERNAME #creds to push container to registry
+DOCKER_REPO #vumat/helloworld-app:latest
+GKE_CLUSTER_REGION #us-west1 region where your gke cluster located
+GKE_PROJECT_ID #id of google cloud project
+
