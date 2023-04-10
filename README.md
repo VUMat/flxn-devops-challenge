@@ -129,6 +129,7 @@ GCP_CREDS           #json of service account
 4. fine-tune firewall in GKE to limit access for github actions to improve security 
 
 5. update helm templates to make sure you are using load balancer with existing IP (which should have dns name attach to it)
-6. add more scan steps to pipeline 
+6. make sure no downtime deploy
+7. add more scan steps to pipeline 
    - docker lint steps
    - test coverage
