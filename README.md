@@ -116,7 +116,7 @@ GCP_CREDS           #json of service account
 
 2. Make sure your branch is protected (no push without PR) by configuring it in repo settings. Add reviewers as well.
 
-3. Push code to your repository. Made sme changes in non main branch, push it and create PR to main branch. It should automatically create "Build and Deploy" Github Actions pipeline. Pipeline works as a check for PR.  
+3. Push code to your repository. Make some changes in non main branch, push it and create PR to main branch. It should automatically create "Build and Deploy" Github Actions pipeline which is building app, docker image, pushing it to registry and then deploying this image to GKE cluster using helm. Pipeline works as a check for PR. After completion of the "Build and Deploy" pipeline it will automatically create PR to prod branch. After merging PR to the prod branch it will trigger prod-deploy pipeline which will deploy using helm to the same cluster but using prod-values.yaml
 
 
 
@@ -128,7 +128,7 @@ GCP_CREDS           #json of service account
 3. add capability to deploy ephemeral GKE cluster for CI/CD and test/dev environmentss  (cluster that will be deleted after all tests) to reduce cloud costs
 4. fine-tune firewall in GKE to limit access for github actions to improve security 
 
-5. update helm templates to make sure you are using load balancer with existing IP (which should have dns name attach to it)
+5. workaround [known issue]( https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs). of not triggering github actions when automatic PR created 
 6. make sure no downtime deploy
 7. add more scan steps to pipeline 
    - docker lint steps

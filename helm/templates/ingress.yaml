@@ -3,6 +3,9 @@ kind: Ingress
 metadata:
   name: {{ include "helloworld-app.fullname" . }}
   namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "helloworld-app.name" . }}
+    release: {{ .Release.Name }}
   annotations:
     kubernetes.io/ingress.class: "gce"
 spec:

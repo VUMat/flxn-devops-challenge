@@ -3,9 +3,13 @@ kind: Service
 metadata:
   name: {{ include "helloworld-app.fullname" . }}
   namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "helloworld-app.name" . }}
+    release: {{ .Release.Name }}
 spec:
   selector:
     app: {{ include "helloworld-app.name" . }}
+    release: {{ .Release.Name }}
   ports:
     - name: http
       port: 80
