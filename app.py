@@ -51,7 +51,7 @@ def hello():
     count = c.fetchone()[0]
 
     # Return a response with the total number of visits
-    return 'Hello World! I have been visited {} times.'.format(count)
+    return 'Hello Awesome World! I have been visited {} times.'.format(count)
 
 
 # Switch to the non-root user
