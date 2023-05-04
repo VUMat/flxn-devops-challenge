@@ -1,5 +1,7 @@
 # Description:
 
+This repository demonstrates an automated GitHub Actions CI/CD pipeline that builds a containerized Python web application, checks code quality, scans for vulnerabilities, and deploys to GKE Kubernetes using Helm. It also includes a list of potential improvements for further optimization.
+
 This repository has a Python Flask web application, app.py, that creates a connection to a SQLite database and returns the total number of visits to the homepage. The application runs on port 5000 and is set to debug mode.
 
 
