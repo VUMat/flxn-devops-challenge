@@ -2,7 +2,6 @@
 
 This repository has a Python Flask web application, app.py, that creates a connection to a SQLite database and returns the total number of visits to the homepage. The application runs on port 5000 and is set to debug mode.
 
-### Application deployed and available http://34.149.252.42/ and http://34.111.84.190/
 
 <details>
   <summary>Description of files in this repo:</summary>
